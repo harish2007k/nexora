@@ -21,7 +21,7 @@ export default function App() {
     e.preventDefault();
 
     try {
-      await fetch("https://render.com/docs/node-version", {
+      await fetch("https://nexora-backend-mr2n.onrender.com/api/save-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, service: selectedService }),
