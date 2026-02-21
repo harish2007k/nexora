@@ -21,7 +21,7 @@ export default function App() {
     e.preventDefault();
 
     try {
-      await fetch("http://localhost:5000/api/save-user", {
+      await fetch("https://nexora-zq5s.onrender.com/api/save-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, service: selectedService }),

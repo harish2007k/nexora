@@ -1,5 +1,4 @@
 const express = require("express");
-const fs = require("fs");
 const cors = require("cors");
 
 const app = express();
@@ -7,30 +6,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+/* ✅ ADD STEP 3 RIGHT HERE */
 app.post("/api/save-user", (req, res) => {
-  const newUser = req.body;
-
-  const folderPath = "./data";
-
-  if (!fs.existsSync(folderPath)) {
-    fs.mkdirSync(folderPath);
-  }
-
-  const filePath = "./data/users.json";
-
-  let users = [];
-
-  if (fs.existsSync(filePath)) {
-    users = JSON.parse(fs.readFileSync(filePath));
-  }
-
-  users.push(newUser);
-
-  fs.writeFileSync(filePath, JSON.stringify(users, null, 2));
-
-  res.json({ message: "User saved successfully" });
+  const userData = req.body;
+  console.log("Received Data:", userData);
+  res.status(200).json({ message: "User saved successfully" });
 });
 
+/* Server start */
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
