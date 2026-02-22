@@ -41,12 +41,19 @@ app.use(express.json());
 /* ✅ ADD STEP 3 RIGHT HERE */
 app.post("/api/save-user", async (req, res) => {
   try {
+    const existingUser = await User.findOne({ email: req.body.email });
+
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
+
     await User.create(req.body);
 
     res.json({ message: "User saved successfully" });
+
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Error saving user" });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
