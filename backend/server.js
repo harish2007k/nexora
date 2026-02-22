@@ -7,12 +7,30 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((err) => console.log("Mongo Error:", err));
   
 const userSchema = new mongoose.Schema({
-name: String,
-mobile: String,
-email: String,
-service: String,
-requirement: String
-});
+  name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  mobile: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true
+  },
+  service: {
+    type: String
+  },
+  requirement: {
+    type: String
+  }
+}, { timestamps: true });
 
 const User = mongoose.model("User", userSchema);
 const app = express();
