@@ -1,16 +1,35 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log("Mongo Error:", err));
+  
+const userSchema = new mongoose.Schema({
+name: String,
+mobile: String,
+email: String,
+service: String,
+requirement: String
+});
+
+const User = mongoose.model("User", userSchema);
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
 /* ✅ ADD STEP 3 RIGHT HERE */
-app.post("/api/save-user", (req, res) => {
-  const userData = req.body;
-  console.log("Received Data:", userData);
-  res.status(200).json({ message: "User saved successfully" });
+app.post("/api/save-user", async (req, res) => {
+  try {
+    await User.create(req.body);
+
+    res.json({ message: "User saved successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Error saving user" });
+  }
 });
 
 /* Server start */
