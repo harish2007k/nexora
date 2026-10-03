@@ -1,0 +1,1 @@
+Git tracks changes through working tree, staging area, and commits.
